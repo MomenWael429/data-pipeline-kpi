@@ -1,8 +1,10 @@
 name: CI/CD data pipeline 
 
 on:
-  schedule:
-    - cron: "0 8 * * *"
+  push:
+  workflow_dispatch: 
+  #schedule:
+  #  - cron: "0 8 * * *"
 jobs: 
   build:
     runs-on: ubuntu-latest
