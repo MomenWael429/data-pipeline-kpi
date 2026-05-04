@@ -96,9 +96,12 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
-          git add .
-          git commit -m "Auto update data" || echo "No changes"
-          git pull --rebase origin main || true
+          git fetch origin main
+          git checkout main
+          git pull --ff-only origin main
+          git add data/data.csv data/build_log.csv output/chart.png output/kpis.json
+          git diff --cached --quiet && echo "No changes to commit" && exit 0
+          git commit -m "Auto update data [skip ci]"
           git push origin main
 
 
