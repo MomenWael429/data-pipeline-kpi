@@ -14,7 +14,7 @@ def test_build_kpi():
 
     total = len(df)
     success = len(df[df["status"] == "success"])
-    rate = (success/total) * 100
+    rate = compute_build_kpis("data/build_log.csv")
 
     assert total == 3
     assert success == 2
