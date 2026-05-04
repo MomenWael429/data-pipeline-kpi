@@ -9,16 +9,17 @@ def run_pipeline():
     print("output dir is there")
 
     try:
+        
         print("Step 1: fetch")
         fetch_data()
-        print("step 2: compute kpis")
-        df, kpis = compute_kpis()
-        print("step 3: chart in output")
-        create_chart(df)
-        print("step 4: json file")
-        save_kpis_json(kpis)
-        print("step 5: logs .....")
+        print("step 2: logs .....")
         log_build("success")
+        print("step 3: compute kpis")
+        df, kpis = compute_kpis()
+        print("step 4: chart in output")
+        create_chart(df)
+        print("step 5: json file")
+        save_kpis_json(kpis)
     except Exception as e:
         log_build("failure")
         raise e
