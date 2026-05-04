@@ -73,7 +73,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v6
         with:
           name: pipeline-outputs
-          path: data/
+          path: .
           if_no_artifact_found: ignore
 
       - name: Run pipeline
