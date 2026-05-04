@@ -2,6 +2,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     "avg_price": 68529.2,
     "max_price": 68720.0,
     "min_price": 68339.0,
@@ -23,5 +24,11 @@
     "max_price": 68720.0,
     "min_price": 68339.0,
     "lastest_change": 1.425458136751331
+>>>>>>> Stashed changes
+=======
+    "avg_price": 68527.2,
+    "max_price": 68720.0,
+    "min_price": 68339.0,
+    "lastest_change": 1.516366243302772
 >>>>>>> Stashed changes
 }

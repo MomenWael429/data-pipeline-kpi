@@ -21,6 +21,7 @@ timestamp,price,price_eur,change_24h
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 2026-05-04 23:05:50.797086,68384,68384,1.3646311612061524
 =======
 2026-05-04 23:07:42.208849,68379,68379,1.3570514657430512
@@ -30,4 +31,7 @@ timestamp,price,price_eur,change_24h
 >>>>>>> Stashed changes
 =======
 2026-05-04 23:13:57.360217,68346,68346,1.425458136751331
+>>>>>>> Stashed changes
+=======
+2026-05-04 23:17:10.657594,68344,68344,1.516366243302772
 >>>>>>> Stashed changes
