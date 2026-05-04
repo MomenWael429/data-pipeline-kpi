@@ -14,3 +14,4 @@ def log_build(status):
 
     df = pd.DataFrame([row])
     df.to_csv(file_path, mode="a", header=not os.path.exists(file_path), index=False)
+    
