@@ -10,11 +10,11 @@ def test_build_kpi():
         "status":["success", "failure", "success"],
     })
 
-    df.to_csv("data/build_log.csv", index=False)
+    df.to_csv("data/build_test_log.csv", index=False)
 
     total = len(df)
     success = len(df[df["status"] == "success"])
-    rate = compute_build_kpis("data/build_log.csv")
+    rate = compute_build_kpis("data/build_test_log.csv")
 
     assert total == 3
     assert success == 2
