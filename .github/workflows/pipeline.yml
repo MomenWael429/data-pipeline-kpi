@@ -57,6 +57,12 @@ jobs:
         uses: actions/setup-python@v5 
         with:
           python-version: "3.10"
+      
+      - name: list files for debugging
+        run: |
+          pwd 
+          ls -la
+          ls -la requirements.txt || echo "requirements.txt not found in current directory"
 
       - name: Install dependencies
         run: |
