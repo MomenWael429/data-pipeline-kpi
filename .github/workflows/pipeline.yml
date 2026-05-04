@@ -10,6 +10,9 @@ permissions:
   
 jobs: 
   build:
+    permissions:
+      contents: write
+      actions: read
     runs-on: ubuntu-latest
     steps:
         - name: Checkout code
@@ -88,7 +91,28 @@ jobs:
         run: |
           pip install -r requirements.txt
           pip install pytest
+      
+      - name: Download previous build log
+        uses: dawidd6/action-download-artifact@v6
+        with:
+          name: pipeline-outputs
+          path: data/
+          if_no_artifact_found: ignore
 
+      - name: Run pipeline
+        run: python main.py
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-outputs
+          path: |
+            data/data.csv
+            data/build_log.csv
+            output/chart.png
+            output/kpis.json
+          overwrite: true
+      
       - name: Run pipeline
         run: python main.py
 
