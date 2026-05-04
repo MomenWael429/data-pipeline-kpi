@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0,'.')
+
 import pandas as pd
 from scripts.process_data import compute_build_kpis
 

@@ -20,3 +20,11 @@ def save_kpis_json(kpis):
 
     with open("output/kpis.json", "w") as f:
         json.dump(kpis, f, indent=4)
+
+
+def compute_build_kpis(path='data/build_log.csv'):
+    df = pd.read_csv(path)
+    total = len(df)
+    success = len(df[df["status"] == "success"])
+    rate = (success/total) * 100
+    return rate
