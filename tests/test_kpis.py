@@ -7,7 +7,7 @@ def test_kpis():
     df = pd.DataFrame({
 
         "price":[10,20,30],
-        "change_24hr": [1,2,3]
+        "change_24h": [1,2,3]
     })
 
     df.to_csv("data/test.csv", index=False)
