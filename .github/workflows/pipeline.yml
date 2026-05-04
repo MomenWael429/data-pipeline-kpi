@@ -1,103 +1,74 @@
-name: CI/CD data pipeline 
+name: CI/CD data pipeline
 
 on:
   push:
-  workflow_dispatch: 
+  workflow_dispatch:
   schedule:
     - cron: "*/30 * * * *"
+
 permissions:
   contents: write
-  
-jobs: 
+  actions: read
+
+jobs:
   build:
-    permissions:
-      contents: write
-      actions: read
     runs-on: ubuntu-latest
-    steps:
-        - name: Checkout code
-          uses: actions/checkout@v4
-
-        - name: Set up Python
-          uses: actions/setup-python@v5
-          with:
-            python-version: "3.10"
-
-        - name: list files for debugging
-          run: |
-            pwd 
-            ls -la
-            ls -la requirements.txt || echo "requirements.txt not found in current directory"
-
-
-        - name: Install dependencies
-          run: | 
-            pip install -r requirements.txt
-            pip install pytest
-
-        - name: Run unit tests
-          run: pytest
-  test:
-    runs-on: ubuntu-latest
-    needs: build
-    permissions:
-      contents: write
-      actions: read
-
-    steps:
-        - name: Checkout code
-          uses: actions/checkout@v4
-
-        - name: Set up Python
-          uses: actions/setup-python@v5
-          with:
-            python-version: "3.10"
-
-        - name: list files for debugging
-          run: |
-            pwd 
-            ls -la
-            ls -la requirements.txt || echo "requirements.txt not found in current directory"
-
-
-        - name: Install dependencies
-          run: | 
-            pip install -r requirements.txt
-            pip install pytest
-
-        - name: Run unit tests
-          run: pytest
-
-        - name: Run pipeline
-          run: python main.py
-
-  run:
-    runs-on: ubuntu-latest
-    needs: test
-    permissions:
-      contents: write
-      actions: read
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v5 
+        uses: actions/setup-python@v5
         with:
           python-version: "3.10"
-      
-      - name: list files for debugging
-        run: |
-          pwd 
-          ls -la
-          ls -la requirements.txt || echo "requirements.txt not found in current directory"
 
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
           pip install pytest
-      
+
+      - name: Run unit tests
+        run: python -m pytest
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: Run unit tests
+        run: python -m pytest
+
+  run:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
+
       - name: Download previous build log
         uses: dawidd6/action-download-artifact@v6
         with:
@@ -118,18 +89,3 @@ jobs:
             output/chart.png
             output/kpis.json
           overwrite: true
-      
-      - name: Run pipeline
-        run: python main.py
-
-      - name: Upload results
-        uses: actions/upload-artifact@v4
-        with:
-          name: pipeline-outputs
-          path: |
-            data/data.csv
-            data/build_log.csv
-            output/chart.png
-            output/kpis.json
-
-
