@@ -75,7 +75,23 @@ jobs:
           pip install pytest
 
       - name: Run pipeline
+        id: run_pipeline
         run: python main.py
+
+      - name: Log failure if pipeline crashed
+        if: failure() && steps.run_pipeline.outcome == 'failure'
+        run: |
+          python - <<'EOF'
+          import pandas as pd
+          from datetime import datetime
+          import os
+
+          os.makedirs("data", exist_ok=True)
+          row = {"timestamp": [datetime.now()], "status": ["failure"]}
+          df = pd.DataFrame(row)
+          file_path = "data/build_log.csv"
+          df.to_csv(file_path, mode="a", header=not os.path.exists(file_path), index=False)
+          EOF
 
       - name: Commit and push results
         run: |
